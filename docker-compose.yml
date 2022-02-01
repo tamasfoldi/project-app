@@ -1,0 +1,46 @@
+version: '3.8'
+services:
+  database:
+    image: project-app-database
+    build:
+      context: ./database
+      dockerfile: Dockerfile
+      args:
+        POSTGRES_VERSION: ${POSTGRES_VERSION}
+        TIMEZONE: ${TIMEZONE}
+    volumes:
+      - project-app-database:/var/lib/postgresql/data
+      - ./database/restore:/opt/restore
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-abc123}
+      - DB_NAME=${DB_NAME:-postgres}
+  api:
+    image: project-app-api
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+      args:
+        STRAPI_VERSION: ${STRAPI_VERSION}
+        STRAPI_BASE_VERSION: ${STRAPI_BASE_VERSION}
+        TIMEZONE: ${TIMEZONE}
+    restart: always
+    ports:
+      - '1337:1337'
+    depends_on:
+      - database
+    volumes:
+      - ./api/app:/srv/app
+      - /srv/app/node_modules
+    environment:
+      - DATABASE_CLIENT=postgres
+      - DATABASE_HOST=${DB_HOST:-database}
+      - DATABASE_PORT=${DB_PORT:-5432}
+      - DATABASE_NAME=${DB_NAME:-postgres}
+      - DATABASE_USERNAME=${DB_USER:-postgres}
+      - DATABASE_PASSWORD=${POSTGRES_PASSWORD:-abc123}
+      - ADMIN_JWT_SECRET=${API_JWT_SECRET:-9FUOSlZk+5LQVKmvtAY6PVvNGiwIuim4oBgMbuSHu4c1VVacUfMyWyTi7x72BwLx2HREgQaMohXDCunode81qg==}
+
+volumes:
+  project-app-database:
