@@ -22,7 +22,7 @@ A felület kialakításába, kinézetébe nem szeretnénk beleszólni, a követk
 
 Amennyiben belefér, nagyon örülnénk, ha a következő megoldásokat is látnánk:
 - NgRx state management használata
-- "sima" HTTP hívások helyett [OpenAPI generátor](https://openapi-generator.tech/) által előállított kód felhasználása, az API ilyen módon történő meghívása
+- "sima" HTTP hívások helyett [OpenAPI generátor](https://openapi-generator.tech/) által előállított kód felhasználása, az API ilyen módon történő meghívása. (Ezzel kapcsolatban fontos, hogy a 'delete' metódus az openapi generátor egy ismert hibájából kikerült az openapi.yaml fájlból, vagyis ezt az egy metódust a hagyományos módon, a HttpClient közvetlen meghívásával oldd meg.)
 
 A teljesen fakultatív feladat pedig:
 - pre-commit hook használata (husky), amely linter-ezi a módosult (lint-staged) frontend kódot ESLint és/vagy Stylelint segítségével
