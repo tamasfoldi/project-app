@@ -27,7 +27,7 @@ Amennyiben belefér, nagyon örülnénk, ha a következő megoldásokat is látn
 A teljesen fakultatív feladat pedig:
 - pre-commit hook használata (husky), amely linter-ezi a módosult (lint-staged) frontend kódot ESLint és/vagy Stylelint segítségével
 
-A megoldást egy fork-olt GitHub privát repository-ba várjuk.
+A megoldást egy **fork-olt GitHub privát repository**-ba várjuk.
 
 Ha bármilyen kérdésed van, vagy valami nem akar úgy működni ahogy kéne, kérlek jelezd!
 
