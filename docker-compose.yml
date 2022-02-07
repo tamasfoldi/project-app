@@ -43,7 +43,6 @@ services:
       - ADMIN_JWT_SECRET=${API_JWT_SECRET:-9FUOSlZk+5LQVKmvtAY6PVvNGiwIuim4oBgMbuSHu4c1VVacUfMyWyTi7x72BwLx2HREgQaMohXDCunode81qg==}
   frontend:
     image: project-app-frontend
-    command: tail -f /dev/null
     build:
       context: ./frontend
       dockerfile: Dockerfile
@@ -57,6 +56,7 @@ services:
       - api
     volumes:
       - ./frontend/app:/srv/app
+      - /srv/app/node_modules
 
 volumes:
   project-app-database:
