@@ -1,0 +1,15 @@
+.gitignore
+.openapi-generator-ignore
+README.md
+api.module.ts
+api/api.ts
+api/project.service.ts
+configuration.ts
+encoder.ts
+git_push.sh
+index.ts
+model/error.ts
+model/models.ts
+model/newProject.ts
+model/project.ts
+variables.ts
