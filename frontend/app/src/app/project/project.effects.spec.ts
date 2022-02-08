@@ -9,7 +9,18 @@ import { cold, hot } from 'jasmine-marbles';
 
 import { ProjectEffects } from './project.effects';
 import { Project, ProjectService } from '../../api';
-import { fetchProjects, fetchProjectsSuccess } from './project.actions';
+import {
+  addProject,
+  addProjectSuccess,
+  deleteProject,
+  deleteProjectSuccess,
+  fetchProjects,
+  fetchProjectsSuccess,
+  updateProject,
+  updateProjectSuccess,
+} from './project.actions';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { HttpClient } from '@angular/common/http';
 
 describe('ProjectEffects', () => {
   let actions$: Observable<any>;
@@ -21,6 +32,7 @@ describe('ProjectEffects', () => {
     service: ProjectEffects,
     providers: [provideMockActions(() => actions$)],
     mocks: [ProjectService],
+    imports: [HttpClientTestingModule],
   });
 
   beforeEach(() => {
@@ -51,6 +63,46 @@ describe('ProjectEffects', () => {
       projectService.projectsGet.and.returnValue(response);
 
       expect(spectator.service.fetchProjects$).toBeObservable(expected);
+    });
+  });
+
+  describe('addProject$', () => {
+    it('should return an addProjectSuccess action', () => {
+      const project: Project = {
+        id: 'project',
+        title: 'Test Project',
+        published_at: '2021-01-01',
+      };
+      const action = addProject({ project });
+      const completion = addProjectSuccess({ project });
+
+      actions$ = hot('-a---', { a: action });
+      const response = cold('-a|', { a: project });
+      const expected = cold('--b', { b: completion });
+      projectService.projectsPost.and.returnValue(response);
+
+      expect(spectator.service.addProject$).toBeObservable(expected);
+    });
+  });
+
+  describe('updateProject$', () => {
+    it('should return an updateProjectSuccess action', () => {
+      const project: Project = {
+        id: 'project',
+        title: 'Test Project',
+        published_at: '2021-01-01',
+      };
+      const action = updateProject({ project });
+      const completion = updateProjectSuccess({
+        project: { id: project.id, changes: project },
+      });
+
+      actions$ = hot('-a---', { a: action });
+      const response = cold('-a|', { a: project });
+      const expected = cold('--b', { b: completion });
+      projectService.projectsIdPut.and.returnValue(response);
+
+      expect(spectator.service.updateProject$).toBeObservable(expected);
     });
   });
 });
