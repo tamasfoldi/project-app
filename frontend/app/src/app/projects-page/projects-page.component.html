@@ -1,1 +1,15 @@
-{{ projects$ | async | json }}
+<h1>Projects</h1>
+<p-table [value]="(projects$ | async) ?? []" responsiveLayout="scroll">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Title</th>
+      <th>Published At</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-project>
+    <tr>
+      <td>{{project.title}}</td>
+      <td>{{project.published_at | date:'medium'}}</td>
+    </tr>
+  </ng-template>
+</p-table>
