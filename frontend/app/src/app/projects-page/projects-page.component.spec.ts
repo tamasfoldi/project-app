@@ -10,10 +10,11 @@ import {
   addProject,
   deleteProject,
   fetchProjects,
+  updateProject,
 } from '../project/project.actions';
 import { selectAllProject } from '../project/project.reducer';
 import { ProjectsPageComponent } from './projects-page.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 describe('ProjectsPageComponent', () => {
   let spectator: Spectator<ProjectsPageComponent>;
@@ -43,6 +44,7 @@ describe('ProjectsPageComponent', () => {
       InputTextModule,
       DialogModule,
       ReactiveFormsModule,
+      FormsModule,
     ],
   });
 
@@ -88,5 +90,15 @@ describe('ProjectsPageComponent', () => {
     spectator.click('.pi-trash');
 
     expect(dispatchSpy).toHaveBeenCalledWith(deleteProject({ id: 'id' }));
+  });
+
+  it('should edit a title', () => {
+    spectator.click(byText('Test Project'));
+    spectator.typeInElement('Modified', 'input');
+    spectator.dispatchKeyboardEvent('input', 'keydown', 'Enter');
+
+    expect(dispatchSpy).toHaveBeenCalledWith(
+      updateProject({ project: { id: 'id', title: 'Modified' } })
+    );
   });
 });

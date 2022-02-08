@@ -8,13 +8,14 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ProjectsPageRoutingModule } from './projects-page-routing.module';
 import { ProjectsPageComponent } from './projects-page.component';
 import { ProjectModule } from '../project/project.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [ProjectsPageComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    FormsModule,
     ProjectModule,
     ProjectsPageRoutingModule,
     TableModule,

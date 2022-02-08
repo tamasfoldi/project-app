@@ -1,5 +1,5 @@
 <h1>Projects</h1>
-<p-table [value]="(projects$ | async) ?? []" responsiveLayout="scroll">
+<p-table [value]="(projects$ | async) ?? []" responsiveLayout="scroll" (onEditComplete)="saveEdit($event.data)">
   <ng-template pTemplate="header">
     <tr>
       <th>Title</th>
@@ -7,9 +7,18 @@
       <th></th>
     </tr>
   </ng-template>
-  <ng-template pTemplate="body" let-project>
+  <ng-template pTemplate="body" let-project let-rowIndex="rowIndex">
     <tr>
-      <td>{{project.title}}</td>
+      <td [pEditableColumn]="project" [pEditableColumnField]="'title'" [pEditableColumnRowIndex]="rowIndex">
+        <p-cellEditor>
+          <ng-template pTemplate="input">
+            <input type="text" pInputText [ngModel]="project.title" (ngModelChange)="editedProjectTitle=$event">
+          </ng-template>
+          <ng-template pTemplate="output">
+            <span class="editable">{{project.title}}</span>
+          </ng-template>
+        </p-cellEditor>
+      </td>
       <td>{{project.published_at | date:'medium'}}</td>
       <td><i class="pi pi-trash" (click)="deleteProject(project.id)"></i></td>
     </tr>

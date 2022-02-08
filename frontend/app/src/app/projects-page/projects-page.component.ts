@@ -1,10 +1,12 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
+import { Project } from '../../api';
 import {
   addProject,
   deleteProject,
   fetchProjects,
+  updateProject,
 } from '../project/project.actions';
 import { selectAllProject } from '../project/project.reducer';
 
@@ -24,6 +26,8 @@ export class ProjectsPageComponent implements OnInit {
     Validators.compose([Validators.required, Validators.minLength(2)])
   );
 
+  editedProjectTitle!: string;
+
   constructor(private store: Store) {}
 
   ngOnInit(): void {
@@ -38,5 +42,13 @@ export class ProjectsPageComponent implements OnInit {
 
   deleteProject(projectId: string): void {
     this.store.dispatch(deleteProject({ id: projectId }));
+  }
+
+  saveEdit(rawData: Project) {
+    this.store.dispatch(
+      updateProject({
+        project: { title: this.editedProjectTitle, id: rawData.id },
+      })
+    );
   }
 }
