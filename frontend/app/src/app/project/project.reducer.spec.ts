@@ -1,6 +1,11 @@
 import { Project } from '../../api';
 import { loadProjects } from './project.actions';
-import { reducer, initialState, ProjectState } from './project.reducer';
+import {
+  reducer,
+  initialState,
+  ProjectState,
+  selectAllProject,
+} from './project.reducer';
 
 describe('Project Reducer', () => {
   describe('load projects action', () => {
@@ -21,6 +26,24 @@ describe('Project Reducer', () => {
       const result = reducer(initialState, action);
 
       expect(result).toEqual(newState);
+    });
+  });
+
+  describe('selectAllProject', () => {
+    it('should return projects from the state', () => {
+      const project: Project = {
+        id: 'id',
+        title: 'Test Project',
+        published_at: '2021-01-01',
+      };
+      const initialState: ProjectState = {
+        entities: {
+          [project.id]: project,
+        },
+        ids: [project.id],
+      };
+
+      expect(selectAllProject.projector(initialState)).toEqual([project]);
     });
   });
 });

@@ -1,4 +1,10 @@
-import { Action, createReducer, on } from '@ngrx/store';
+import {
+  Action,
+  createReducer,
+  on,
+  createFeatureSelector,
+  createSelector,
+} from '@ngrx/store';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import * as ProjectActions from './project.actions';
 import { Project } from '../../api';
@@ -6,6 +12,9 @@ import { Project } from '../../api';
 export const projectsFeatureKey = 'projects';
 
 export interface ProjectState extends EntityState<Project> {}
+
+export const projectState =
+  createFeatureSelector<ProjectState>(projectsFeatureKey);
 
 export const adapter: EntityAdapter<Project> = createEntityAdapter<Project>();
 
@@ -45,3 +54,5 @@ export const reducer = createReducer(
 
 export const { selectIds, selectEntities, selectAll, selectTotal } =
   adapter.getSelectors();
+
+export const selectAllProject = createSelector(projectState, selectAll);
