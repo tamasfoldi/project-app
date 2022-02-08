@@ -5,15 +5,11 @@ import { Project } from '../../api';
 
 export const projectsFeatureKey = 'projects';
 
-export interface State extends EntityState<Project> {
-  // additional entities state properties
-}
+export interface ProjectState extends EntityState<Project> {}
 
 export const adapter: EntityAdapter<Project> = createEntityAdapter<Project>();
 
-export const initialState: State = adapter.getInitialState({
-  // additional entity state properties
-});
+export const initialState: ProjectState = adapter.getInitialState({});
 
 export const reducer = createReducer(
   initialState,
