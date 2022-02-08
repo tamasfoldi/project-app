@@ -29,6 +29,7 @@
     "@angular-devkit/build-angular": "~13.2.2",
     "@angular/cli": "~13.2.2",
     "@angular/compiler-cli": "~13.2.0",
+    "@ngneat/spectator": "^10.0.0",
     "@ngrx/schematics": "^13.0.2",
     "@openapitools/openapi-generator-cli": "^2.4.26",
     "@types/jasmine": "~3.10.0",
