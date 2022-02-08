@@ -2,6 +2,8 @@ import { createAction, props } from '@ngrx/store';
 import { Update } from '@ngrx/entity';
 import { Project } from '../../api';
 
+export const fetchProjects = createAction('[Project/API] Fetch Projects');
+
 export const loadProjects = createAction(
   '[Project/API] Load Projects',
   props<{ projects: Project[] }>()
