@@ -9,7 +9,7 @@ import { cold, hot } from 'jasmine-marbles';
 
 import { ProjectEffects } from './project.effects';
 import { Project, ProjectService } from '../../api';
-import { fetchProjects, loadProjects } from './project.actions';
+import { fetchProjects, fetchProjectsSuccess } from './project.actions';
 
 describe('ProjectEffects', () => {
   let actions$: Observable<any>;
@@ -34,7 +34,7 @@ describe('ProjectEffects', () => {
   });
 
   describe('fetchProjects$', () => {
-    it('should return a loadProjects action', () => {
+    it('should return a fetchProjectsSuccess action', () => {
       const projects: Project[] = [
         {
           id: 'project',
@@ -43,7 +43,7 @@ describe('ProjectEffects', () => {
         },
       ];
       const action = fetchProjects();
-      const completion = loadProjects({ projects });
+      const completion = fetchProjectsSuccess({ projects });
 
       actions$ = hot('-a---', { a: action });
       const response = cold('-a|', { a: projects });

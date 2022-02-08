@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { map, mergeMap } from 'rxjs/operators';
 import { Project, ProjectService } from '../../api';
-import { fetchProjects, loadProjects } from './project.actions';
+import { fetchProjects, fetchProjectsSuccess } from './project.actions';
 
 @Injectable()
 export class ProjectEffects {
@@ -12,7 +12,9 @@ export class ProjectEffects {
       mergeMap(() =>
         this.projectService
           .projectsGet()
-          .pipe(map((projects: Project[]) => loadProjects({ projects })))
+          .pipe(
+            map((projects: Project[]) => fetchProjectsSuccess({ projects }))
+          )
       )
     )
   );

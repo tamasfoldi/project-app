@@ -4,8 +4,8 @@ import { Project } from '../../api';
 
 export const fetchProjects = createAction('[Project/API] Fetch Projects');
 
-export const loadProjects = createAction(
-  '[Project/API] Load Projects',
+export const fetchProjectsSuccess = createAction(
+  '[Project/API] Fetch Projects Success',
   props<{ projects: Project[] }>()
 );
 
@@ -14,29 +14,19 @@ export const addProject = createAction(
   props<{ project: Project }>()
 );
 
-export const upsertProject = createAction(
-  '[Project/API] Upsert Project',
+export const addProjectSuccess = createAction(
+  '[Project/API] Add Project Success',
   props<{ project: Project }>()
-);
-
-export const addProjects = createAction(
-  '[Project/API] Add Projects',
-  props<{ projects: Project[] }>()
-);
-
-export const upsertProjects = createAction(
-  '[Project/API] Upsert Projects',
-  props<{ projects: Project[] }>()
 );
 
 export const updateProject = createAction(
   '[Project/API] Update Project',
-  props<{ project: Update<Project> }>()
+  props<{ project: Project }>()
 );
 
-export const updateProjects = createAction(
-  '[Project/API] Update Projects',
-  props<{ projects: Update<Project>[] }>()
+export const updateProjectSuccess = createAction(
+  '[Project/API] Update Project Success',
+  props<{ project: Update<Project> }>()
 );
 
 export const deleteProject = createAction(
@@ -44,9 +34,7 @@ export const deleteProject = createAction(
   props<{ id: string }>()
 );
 
-export const deleteProjects = createAction(
-  '[Project/API] Delete Projects',
-  props<{ ids: string[] }>()
+export const deleteProjectSuccess = createAction(
+  '[Project/API] Delete Project Success',
+  props<{ id: string }>()
 );
-
-export const clearProjects = createAction('[Project/API] Clear Projects');
