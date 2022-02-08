@@ -12,15 +12,12 @@ import { Project, ProjectService } from '../../api';
 import {
   addProject,
   addProjectSuccess,
-  deleteProject,
-  deleteProjectSuccess,
   fetchProjects,
   fetchProjectsSuccess,
   updateProject,
   updateProjectSuccess,
 } from './project.actions';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { HttpClient } from '@angular/common/http';
 
 describe('ProjectEffects', () => {
   let actions$: Observable<any>;

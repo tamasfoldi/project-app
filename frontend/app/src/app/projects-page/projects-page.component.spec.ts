@@ -1,10 +1,19 @@
-import { Spectator, createComponentFactory } from '@ngneat/spectator';
+import { Spectator, createComponentFactory, byText } from '@ngneat/spectator';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { TableModule } from 'primeng/table';
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
+import { DialogModule } from 'primeng/dialog';
+
 import { Project } from '../../api';
-import { fetchProjects } from '../project/project.actions';
+import {
+  addProject,
+  deleteProject,
+  fetchProjects,
+} from '../project/project.actions';
 import { selectAllProject } from '../project/project.reducer';
 import { ProjectsPageComponent } from './projects-page.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('ProjectsPageComponent', () => {
   let spectator: Spectator<ProjectsPageComponent>;
@@ -14,10 +23,27 @@ describe('ProjectsPageComponent', () => {
     providers: [
       provideMockStore({
         initialState: {},
-        selectors: [{ selector: selectAllProject, value: [] }],
+        selectors: [
+          {
+            selector: selectAllProject,
+            value: [
+              {
+                id: 'id',
+                title: 'Test Project',
+                published_at: '2022-02-01T12:01:40.195Z',
+              },
+            ],
+          },
+        ],
       }),
     ],
-    imports: [TableModule],
+    imports: [
+      TableModule,
+      ButtonModule,
+      InputTextModule,
+      DialogModule,
+      ReactiveFormsModule,
+    ],
   });
 
   let store: MockStore;
@@ -43,17 +69,24 @@ describe('ProjectsPageComponent', () => {
   });
 
   it('should list projects', () => {
-    const projects: Project[] = [
-      {
-        id: 'id',
-        title: 'Test Project',
-        published_at: '2022-02-01T12:01:40.195Z',
-      },
-    ];
-    store.overrideSelector(selectAllProject, projects);
-    store.refreshState();
-    spectator.detectChanges();
-
     expect(spectator.query('td')).toHaveText('Test Project');
+  });
+
+  it('should add new project', () => {
+    spectator.click(byText('Add new'));
+    spectator.typeInElement('test project', 'input');
+    spectator.click('p-button');
+
+    expect(dispatchSpy).toHaveBeenCalledWith(
+      addProject({ project: { title: 'test project' } })
+    );
+    expect(spectator.component.creatingProject).toEqual(false);
+    expect(spectator.component.newProjectTitle.value).toBeNull();
+  });
+
+  it('should remove project', () => {
+    spectator.click('.pi-trash');
+
+    expect(dispatchSpy).toHaveBeenCalledWith(deleteProject({ id: 'id' }));
   });
 });
